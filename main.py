@@ -17,9 +17,6 @@ master = Tk()
 master.title("QUESTÃO RAÍZ QUADRADA")
 master.geometry('800x600')
 
-#startingScene = input('Pressione 0 para treino ou qualquer outra coisa para pergunta normal')
-startingScene = '0'
-
 ############################################################################################################################################################
 ########################################################################  Overlay  #########################################################################
 ############################################################################################################################################################
@@ -45,41 +42,20 @@ for i in range(3):
     answerHistory[i][0].tkraise(aboveThis=answerHistory[i][1])
 
 ############################################################################################################################################################
-###################################################################  Question Scene (0)  ###################################################################
+###################################################################  Labels  ###################################################################
 ############################################################################################################################################################
 
+# General
+currentQuestionText = Label(master)
+currentQuestionNumber = Label(master)
 
+# Practice mode
 answer = tkinter.StringVar()
 answerEntry = Entry(master, textvariable=answer, font=('Arial', 20))
-if startingScene == '0':
-    # Question
-    currentQuestionText = Label(text="Qual é a raiz quadrada de...", font=("Arial", 40), justify=CENTER)
-    currentQuestionText.place(relx=0.5, rely = 0.2, anchor='n')
-    currentQuestionNumber = Label(text="▢▢▢▢▢▢", font=("Arial", 100), justify=CENTER)
-    currentQuestionNumber.place(relx=0.5, rely = 0.3, anchor='n')
 
-    # Submit Answer
-    answerEntry.place(relx=0.5,rely=0.57, anchor='n')
-
-    showAnswer = Label(master, text='RESPOSTA\nCORRETA', font=('Arial', 50), justify=CENTER)
-    showNumberAnswer = Label(master,text='▢▢▢', font=('Arial', 100), justify=CENTER)
-
-############################################################################################################################################################
-####################################################################  Answer Scene (1)  ####################################################################
-############################################################################################################################################################
-
-else:
-    # Question
-    currentQuestionText = Label(text="Qual é a raiz quadrada de...", font=("Arial", 36), justify=CENTER)
-    currentQuestionText.place(relx=0.4, rely = 0.2, anchor='n')
-    currentQuestionNumber = Label(text="▢▢▢▢▢▢", font=("Arial", 90), justify=CENTER)
-    currentQuestionNumber.place(relx=0.4, rely = 0.3, anchor='n')
-
-    # Show Answer
-    showAnswer = Label(master, text='RESPOSTA\nCORRETA', font=('Arial', 25), justify=CENTER)
-    showNumberAnswer = Label(master,text='▢▢▢', font=('Arial', 60), justify=CENTER)
-    showAnswer.place(relx=0.85, rely=0.4, anchor='n')
-    showNumberAnswer.place(relx=0.85, rely=0.55, anchor='n')
+# Quiz mode
+showAnswer = Label(master)
+showNumberAnswer = Label(master)
 
 ############################################################################################################################################################
 ##########################################################################  Code  ##########################################################################
@@ -167,14 +143,39 @@ submitButton = Button(master, text='Submit', font=('Arial', 20), command=checkAn
 correctButton = Button(master, text='CORRETO', font=('Arial', 20), fg='green', command=answerCorrectFunction)
 wrongButton = Button(master, text='ERRADO', font=('Arial', 20), fg='red', command=answerWrongFunction)
 
+############################################################################################################################################################
+#####################################################################  Starting Scene  #####################################################################
+############################################################################################################################################################
 
-if startingScene == '0':
-    submitButton.place(relx=0.5, rely=0.65, anchor='n')
-else:
-    correctButton.place(relx=0.27,rely=0.57, anchor='n')
-    wrongButton.place(relx=0.5,rely=0.57, anchor='n')
+def startScene(scene):
+    if scene == 0:
 
-    
+        currentQuestionText.configure(text="Qual é a raiz quadrada de...", font=("Arial", 40), justify=CENTER)
+        currentQuestionText.place(relx=0.5, rely = 0.2, anchor='n')
+
+        currentQuestionNumber.configure(text="▢▢▢▢▢▢", font=("Arial", 100), justify=CENTER)
+        currentQuestionNumber.place(relx=0.5, rely = 0.3, anchor='n')
+
+        answerEntry.place(relx=0.5,rely=0.57, anchor='n')
+        submitButton.place(relx=0.5, rely=0.65, anchor='n')
+
+    else:
+
+        currentQuestionText.configure(text="Qual é a raiz quadrada de...", font=("Arial", 36), justify=CENTER)
+        currentQuestionText.place(relx=0.4, rely = 0.2, anchor='n')
+
+        currentQuestionNumber.configure(text="▢▢▢▢▢▢", font=("Arial", 90), justify=CENTER)
+        currentQuestionNumber.place(relx=0.4, rely = 0.3, anchor='n')
+
+        showAnswer = Label(master, text='RESPOSTA\nCORRETA', font=('Arial', 25), justify=CENTER)
+        showNumberAnswer = Label(master,text='▢▢▢', font=('Arial', 60), justify=CENTER)
+        showAnswer.place(relx=0.85, rely=0.4, anchor='n')
+        showNumberAnswer.place(relx=0.85, rely=0.55, anchor='n')
+
+        correctButton.place(relx=0.27,rely=0.57, anchor='n')
+        wrongButton.place(relx=0.5,rely=0.57, anchor='n')
+
+    generateQuestion()
 
 ############################################################################################################################################################
 ##########################################################################  Code  ##########################################################################
@@ -201,6 +202,37 @@ def changeScene():
     ending1.place(relx=0.5, rely=0.45, anchor=S)
     ending2 = Label(master, text='RESPONDIDAS CORRETAMENTE', justify=CENTER, font=('arial', 30))
     ending2.place(relx=0.5, rely=0.5, anchor=N)
+
+############################################################################################################################################################
+####################################################################  Control Window  ######################################################################
+############################################################################################################################################################
+
+controlWindow = Tk()
+controlWindow.title('Janela de controle')
+controlWindow.geometry('200x200')
+
+choosePracticeQuestion = Label(controlWindow, text='ATIVAR\nMODO\nPRÁTICA?', font=('arial',20))
+choosePracticeQuestion.pack()
+
+def setStart0():
+    choosePracticeNo.destroy()
+    choosePracticeYes.destroy()
+    choosePracticeQuestion.destroy()
+    startScene(0)
+
+def setStart1():
+    choosePracticeNo.destroy()
+    choosePracticeYes.destroy()
+    choosePracticeQuestion.destroy()
+    startScene(1)
+
+choosePracticeYes = Button(controlWindow, text='Sim', font=('arial',15), command=setStart0)
+choosePracticeYes.pack()
+
+choosePracticeNo = Button(controlWindow, text='Não', font=('arial',15), command=setStart1)
+choosePracticeNo.pack()
+
+controlWindow.mainloop()
 
 master.update()
 
