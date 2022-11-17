@@ -4,6 +4,10 @@ from tkinter import *
 import tkinter
 from turtle import back
 
+# Hide console
+import ctypes
+ctypes.windll.user32.ShowWindow( ctypes.windll.kernel32.GetConsoleWindow(), 0 )
+
 # Square root question
 def question(correct):
     answer = input("Qual é a raíz quadrada de " + str(correct**2))
