@@ -18,7 +18,7 @@ master.title("QUESTÃO RAÍZ QUADRADA")
 master.geometry('800x600')
 
 #startingScene = input('Pressione 0 para treino ou qualquer outra coisa para pergunta normal')
-startingScene = 1
+startingScene = '0'
 
 ############################################################################################################################################################
 ########################################################################  Overlay  #########################################################################
@@ -53,13 +53,13 @@ answer = tkinter.StringVar()
 answerEntry = Entry(master, textvariable=answer, font=('Arial', 20))
 if startingScene == '0':
     # Question
-    currentQuestionText = Label(text="Qual é a raiz quadrada de...", font=("Arial", 50), justify=CENTER)
+    currentQuestionText = Label(text="Qual é a raiz quadrada de...", font=("Arial", 40), justify=CENTER)
     currentQuestionText.place(relx=0.5, rely = 0.2, anchor='n')
-    currentQuestionNumber = Label(text="▢▢▢▢▢▢", font=("Arial", 130), justify=CENTER)
+    currentQuestionNumber = Label(text="▢▢▢▢▢▢", font=("Arial", 100), justify=CENTER)
     currentQuestionNumber.place(relx=0.5, rely = 0.3, anchor='n')
 
     # Submit Answer
-    answerEntry.place(relx=0.5,rely=0.6, anchor='n')
+    answerEntry.place(relx=0.5,rely=0.57, anchor='n')
 
     showAnswer = Label(master, text='RESPOSTA\nCORRETA', font=('Arial', 50), justify=CENTER)
     showNumberAnswer = Label(master,text='▢▢▢', font=('Arial', 100), justify=CENTER)
@@ -197,9 +197,9 @@ def changeScene():
         if i[1].cget('text') == '✔️':
             correctAnswers += 1
 
-    ending1 = Label(master, text=str(correctAnswers) + ' DE 3 QUESTÕES', justify=CENTER, font=('arial', 60))
+    ending1 = Label(master, text=str(correctAnswers) + ' DE 3 QUESTÕES', justify=CENTER, font=('arial', 50))
     ending1.place(relx=0.5, rely=0.45, anchor=S)
-    ending2 = Label(master, text='RESPONDIDAS CORRETAMENTE', justify=CENTER, font=('arial', 40))
+    ending2 = Label(master, text='RESPONDIDAS CORRETAMENTE', justify=CENTER, font=('arial', 30))
     ending2.place(relx=0.5, rely=0.5, anchor=N)
 
 master.update()
