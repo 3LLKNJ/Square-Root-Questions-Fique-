@@ -17,6 +17,12 @@ master = Tk()
 master.title("QUESTÃO RAÍZ QUADRADA")
 master.geometry('800x600')
 
+# Control Window
+controlWindow = Tk()
+controlWindow.title('Janela de controle')
+controlWindow.geometry('300x400')
+currentQuestionControl = Label(controlWindow, font=('arial',20))
+
 ############################################################################################################################################################
 ########################################################################  Overlay  #########################################################################
 ############################################################################################################################################################
@@ -66,6 +72,7 @@ def generateQuestion():
     currentAnswer = random.randint(100,1000)
     currentQuestionNumber.configure(text=str(currentAnswer**2))
     showNumberAnswer.configure(text=str(currentAnswer))
+    currentQuestionControl.configure(text='PERGUNTA ATUAL\n' + str(currentAnswer**2) + '\n\nRESPOSTA ATUAL\n' + str(currentAnswer) + '\n')
 
 generateQuestion()
 
@@ -140,8 +147,6 @@ def answerWrongFunction():
         generateQuestion()
 
 submitButton = Button(master, text='Submit', font=('Arial', 20), command=checkAnswer)
-correctButton = Button(master, text='CORRETO', font=('Arial', 20), fg='green', command=answerCorrectFunction)
-wrongButton = Button(master, text='ERRADO', font=('Arial', 20), fg='red', command=answerWrongFunction)
 
 ############################################################################################################################################################
 #####################################################################  Starting Scene  #####################################################################
@@ -172,9 +177,6 @@ def startScene(scene):
         showAnswer.place(relx=0.85, rely=0.4, anchor='n')
         showNumberAnswer.place(relx=0.85, rely=0.55, anchor='n')
 
-        correctButton.place(relx=0.27,rely=0.57, anchor='n')
-        wrongButton.place(relx=0.5,rely=0.57, anchor='n')
-
     generateQuestion()
 
 ############################################################################################################################################################
@@ -187,8 +189,6 @@ def changeScene():
     currentQuestionNumber.destroy()
     answerEntry.destroy()
     submitButton.destroy()
-    correctButton.destroy()
-    wrongButton.destroy()
     showAnswer.destroy()
     showNumberAnswer.destroy()
 
@@ -207,10 +207,6 @@ def changeScene():
 ####################################################################  Control Window  ######################################################################
 ############################################################################################################################################################
 
-controlWindow = Tk()
-controlWindow.title('Janela de controle')
-controlWindow.geometry('200x200')
-
 choosePracticeQuestion = Label(controlWindow, text='ATIVAR\nMODO\nPRÁTICA?', font=('arial',20))
 choosePracticeQuestion.pack()
 
@@ -224,12 +220,17 @@ def setStart1():
     choosePracticeNo.destroy()
     choosePracticeYes.destroy()
     choosePracticeQuestion.destroy()
+    currentQuestionControl.pack()
     startScene(1)
+    wrongButton = Button(controlWindow, text='RESPOSTA\nERRADA', font=('Arial', 20), fg='red', command=answerWrongFunction)
+    wrongButton.pack()
+    correctButton = Button(controlWindow, text='RESPOSTA\nCORRETA', font=('Arial', 20), fg='green', command=answerCorrectFunction)
+    correctButton.pack()
 
-choosePracticeYes = Button(controlWindow, text='Sim', font=('arial',15), command=setStart0)
+choosePracticeYes = Button(controlWindow, text='SIM', font=('arial',15), command=setStart0)
 choosePracticeYes.pack()
 
-choosePracticeNo = Button(controlWindow, text='Não', font=('arial',15), command=setStart1)
+choosePracticeNo = Button(controlWindow, text='NÃO', font=('arial',15), command=setStart1)
 choosePracticeNo.pack()
 
 controlWindow.mainloop()
