@@ -167,8 +167,8 @@ def startScene(scene):
         currentQuestionNumber.configure(text="▢▢▢▢▢▢", font=("Arial", 90), justify=CENTER)
         currentQuestionNumber.place(relx=0.4, rely = 0.3, anchor='n')
 
-        showAnswer = Label(master, text='RESPOSTA\nCORRETA', font=('Arial', 25), justify=CENTER)
-        showNumberAnswer = Label(master,text='▢▢▢', font=('Arial', 60), justify=CENTER)
+        showAnswer.configure(text='RESPOSTA\nCORRETA', font=('Arial', 25), justify=CENTER)
+        showNumberAnswer.configure(text='▢▢▢', font=('Arial', 60), justify=CENTER)
         showAnswer.place(relx=0.85, rely=0.4, anchor='n')
         showNumberAnswer.place(relx=0.85, rely=0.55, anchor='n')
 
